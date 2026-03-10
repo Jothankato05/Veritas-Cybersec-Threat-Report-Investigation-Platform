@@ -78,13 +78,15 @@ RESEARCH SEMINAR PROJECT/
 
 ## Deployment
 
-The project is configured for easy deployment on **Render.com**:
+## Deployment
 
-1. **Backend**: Deploy as a *Web Service* using the `backend/Dockerfile` or the Node.js runtime. Ensure you add your `DATABASE_URL`, `JWT_PRIVATE_KEY`, and `JWT_PUBLIC_KEY` as environment variables.
-2. **Frontend**: Deploy as a *Static Site*. Ensure you set `VITE_API_URL` to your backend URL.
-3. **Database**: Use Render's managed PostgreSQL or Supabase.
+### Vercel (Optimized Serverless)
+1.  **Backend API**: Import and set **Root Directory** to `backend`. Add `DATABASE_URL` and `JWT` keys. Vercel will auto-configure via `backend/vercel.json`.
+2.  **Frontend App**: Import and set **Root Directory** to `frontend`. Add `VITE_API_URL` pointing to the backend deployment.
 
-Refer to `render.yaml` for infrastructure-as-code configuration.
+### Render (Full Stack Blueprint)
+The project includes a `render.yaml` for one-click deployment. Create a "Blueprint" on Render.com and connect this repository for automated database, API, and frontend provisioning.
+
 
 ## Security Implementation
 
