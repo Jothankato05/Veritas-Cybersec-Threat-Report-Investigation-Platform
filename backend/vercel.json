@@ -1,15 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "source": "/(.*)",
-      "destination": "api/index.ts"
-    }
-  ]
+  "installCommand": "npm ci",
+  "buildCommand": "npx prisma generate && (if [ -n \"$DATABASE_URL\" ]; then npx prisma db push --skip-generate; else echo 'DATABASE_URL not set: skipping schema sync'; fi)",
+  "outputDirectory": "public",
+  "functions": { "api/index.ts": { "maxDuration": 30, "includeFiles": "node_modules/.prisma/**" } },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }

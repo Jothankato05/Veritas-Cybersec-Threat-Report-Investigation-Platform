@@ -1,9 +1,12 @@
 {
-  "version": 2,
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+    { "source": "/api/v1/:path*", "destination": "https://vctrip-api-primers.vercel.app/api/v1/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [{ "source": "/(.*)", "headers": [
+    { "key": "X-Content-Type-Options", "value": "nosniff" },
+    { "key": "X-Frame-Options", "value": "DENY" },
+    { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+    { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" }
+  ] }]
 }

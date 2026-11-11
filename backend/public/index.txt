@@ -1,0 +1,1 @@
+V-CTRIP API: see /api/v1/health

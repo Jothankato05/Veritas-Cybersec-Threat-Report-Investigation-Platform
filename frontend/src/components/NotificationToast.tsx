@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { ShieldAlert, X, Zap } from 'lucide-react';
 
-// Socket URL derived from API URL
-const SOCKET_URL = import.meta.env.VITE_API_URL?.replace('/api/v1/', '') || 'http://localhost:3000';
+// Live alerts need a long-running API server with Socket.io. Set VITE_SOCKET_URL to that server to
+// enable them; serverless deployments (Vercel) have no socket server, so the stream stays off there.
+const SOCKET_URL: string | undefined = import.meta.env.VITE_SOCKET_URL || (import.meta.env.DEV ? 'http://localhost:3000' : undefined);
 
 interface Notification {
     id: string;
@@ -17,6 +18,7 @@ export const NotificationToast = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
     useEffect(() => {
+        if (!SOCKET_URL) return;
         const socket = io(SOCKET_URL);
 
         socket.on('connect', () => {
