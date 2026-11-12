@@ -1,7 +1,7 @@
 import { Controller, Request, Post, UseGuards, Body, Ip, Headers, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { IsEmail, IsString, MinLength, IsEnum, IsOptional } from 'class-validator';
+import { IsEmail, IsString, MinLength, MaxLength, Matches, IsEnum, IsOptional } from 'class-validator';
 import { UserRole } from '@prisma/client';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { RolesGuard } from './guards/roles.guard';
@@ -29,6 +29,20 @@ class RegisterDto {
     role?: UserRole;
 }
 
+class PrimersLoginDto {
+    @IsString()
+    @MinLength(20)
+    @MaxLength(200)
+    code!: string;
+
+    @Matches(/^[A-Za-z0-9_-]{43,128}$/)
+    verifier!: string;
+
+    @IsString()
+    @MaxLength(200)
+    redirect_uri!: string;
+}
+
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
@@ -40,6 +54,11 @@ export class AuthController {
             throw new UnauthorizedException('Invalid credentials');
         }
         return this.authService.login(user, ip, ua);
+    }
+
+    @Post('primers')
+    async primers(@Body() dto: PrimersLoginDto, @Ip() ip: string, @Headers('user-agent') ua: string) {
+        return this.authService.loginWithPrimersId(dto.code, dto.verifier, dto.redirect_uri, ip, ua);
     }
 
     @Post('register')

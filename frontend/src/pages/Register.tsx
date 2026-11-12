@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { startPrimersSignIn } from '../lib/primersId';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import axios from 'axios';
@@ -102,6 +103,23 @@ export const Register = () => {
                         </Button>
                     </div>
                 </form>
+                <div className="mt-6">
+                    <div className="relative my-4 text-center text-xs uppercase tracking-wide text-gray-500">
+                        <span className="bg-white/90 px-2">or</span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => startPrimersSignIn(true)}
+                        className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm transition-colors hover:bg-gray-50"
+                    >
+                        <img src="https://id.primersgroup.ng/brand/mark-blue.svg" alt="" width={12} height={16} />
+                        Sign up with Primers ID
+                    </button>
+                    <p className="mt-3 text-center text-xs text-gray-500">
+                        Primers ID shares your verified email with V-CTRIP.{' '}
+                        <a href="https://primersgroup.ng/privacy/#primers-id" target="_blank" rel="noopener noreferrer" className="underline">Privacy</a>
+                    </p>
+                </div>
             </div>
         </div>
     );

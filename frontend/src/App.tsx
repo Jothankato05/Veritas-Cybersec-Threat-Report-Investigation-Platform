@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { PrimersReturn } from './pages/PrimersReturn';
 import { Layout } from './components/Layout';
 import { SubmitReport } from './pages/SubmitReport';
 import { MyReports } from './pages/MyReports';
@@ -52,6 +53,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/auth/primers" element={<PrimersReturn />} />
 
           <Route path="/" element={
             <ProtectedRoute>
